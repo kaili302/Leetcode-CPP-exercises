@@ -43,21 +43,25 @@ public:
     }
 };
 
-// solution o(n)
-typedef std::vector<std::vector<int>> vvint_t;
-class Solution {
-	vvint_t findLeaves(TreeNode *root) {
-		vvint_t result;
-		helper(root, result);
-	}
 
-	int helper(TreeNode *root, vvint_t &result){
-		if (!root) return -1;
-		int leftVal=helper(root->left, result);
-		int rightVal=helper(root->right, result);
-		int currVal = Math.max(leftVal, rightVal)+1;
-		if (result.size()<=currVal) result.push_back(std::vector<int>{});
-		result[currVal].push_back(currVal);
-		return currVal;
-	}
-}
+// solution o(n)
+class Solution {
+public:
+    std::vector<std::vector<int>> findLeaves(TreeNode *root) {
+        std::vector<std::vector<int>> result;
+        helper(root, result);
+        return result;
+    }
+
+    int helper(TreeNode *root, std::vector<std::vector<int>> &result){
+        if (!root) return -1;
+        int leftLevel = helper(root->left, result);
+        int rightLevel = helper(root->right, result);
+
+        int currLevel = std::max(leftLevel, rightLevel)+1;
+
+        while (result.size()<=currLevel) result.push_back(std::vector<int>{});
+        result[currLevel].push_back(root->val);
+        return currLevel;
+    }
+};
