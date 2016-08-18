@@ -8,7 +8,7 @@ Return: 1 --> 2 --> 3 --> 4 --> 5
 
 class Solution {
 public:
-    ListNode* removeElements(ListNode* head, int val) {
+    ListNode* removeElements(ListNode *head, int val) {
 		ListNode dummy{0};
 		dummy.next=head;
 		ListNode *pHead=&dummy;

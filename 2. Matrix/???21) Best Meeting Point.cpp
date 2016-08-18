@@ -13,7 +13,7 @@ ans. 想到的第一个方法就是遍历每一个点 求出每一个点到所�
 */
 class Solution{
 public:
-	int minTotalDistance( std::vector<std::vector<int>> grid) {
+	int minTotalDistance( std::vector<std::vector<int>> &grid) {
 		assert(grid.size());
 		int HEIGHT = grid.size();
 		int WIDTH = grid[0].size();

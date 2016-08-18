@@ -14,7 +14,7 @@ Your algorithm should use only constant space. You may not modify the values in 
  */
 class Solution {
 public:
-    ListNode* swapPairs(ListNode* head) {
+    ListNode* swapPairs(ListNode *head) {
     	if(!head||!head->next) return head;
     	ListNode dummy{0};
     	dummy.next=head;

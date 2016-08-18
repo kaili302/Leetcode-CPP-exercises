@@ -3,7 +3,7 @@ Reverse Linked List (Java)
 */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
+    ListNode* reverseList(ListNode *head) {
   		if (!head) return head;
   		ListNode *curr=head->next;
   		ListNode *prev=head;
@@ -29,7 +29,7 @@ Analysis
 
 class Solution {
 public:
-    ListNode* reverseBetween(ListNode* head, int m, int n) {
+    ListNode* reverseBetween(ListNode *head, int m, int n) {
   		if (m==n||!head) return head;
   		ListNode fakeHead{0};
   		ListNode *pFakeHead=&fakeHead;
