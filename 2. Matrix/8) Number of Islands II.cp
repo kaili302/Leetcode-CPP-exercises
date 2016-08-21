@@ -9,7 +9,9 @@ water.
 
 class Solution{
 public:
-	vector<int> numIslands2(int m, int n, int[][] positions) {
+	vector<int> numIslands2(int m, int n, vector<vector<char>>& positions) {
 
+		
 
+	}
 };
