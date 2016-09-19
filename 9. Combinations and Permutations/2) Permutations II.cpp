@@ -5,7 +5,7 @@ eg. [1,1,2] have the following unique permutations: [1,1,2], [1,2,1], and [2,1,1
 
 class Solution {
 private:
-	void permuteUnique(vector<int> nums, int i, vector<vector<int>> &result) {
+	void permuteUnique(vector<int> nums, int i, vector<vector<int>>& result) {
 		if (i == nums.size()){
 			result.push_back(nums);
 			return;

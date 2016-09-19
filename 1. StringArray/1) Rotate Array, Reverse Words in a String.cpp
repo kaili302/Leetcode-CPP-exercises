@@ -18,7 +18,7 @@ using namespace std;
 
 class Solution {
 public:
-	void reverseWords(string &s) {
+	void reverseWords(string& s) {
 		reverse (s, 0, s.length()-1);
 		int left=0; // first non-zero charater
 		for (int i=0; i<s.length(); i++) {
@@ -29,8 +29,8 @@ public:
 		}
 	}
 
-	void reverse (string &s, int lo, int hi) {
-		if (lo<0 || hi >=s.length()) return;
+	void reverse (string& s, int lo, int hi) {
+		if (lo<0 || hi >= s.length()) return;
 
 		while (lo < hi) {
 			swap (s[lo++], s[hi--]);

@@ -14,7 +14,7 @@ For example, given n = 3, a solution set is:
 
 class Solution {
 private:
-	void generateParenthesis(int nLeft, int nRight, string &combination, vector<string> &result) {
+	void generateParenthesis(int nLeft, int nRight, string& combination, vector<string>& result) {
 		if (nLeft == 0 && nRight == 0){
 			result.push_back(combination);
 			return;

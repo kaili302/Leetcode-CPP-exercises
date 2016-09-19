@@ -27,7 +27,7 @@ public:
 		return -1;
     }
 
-    int partition(vector<int> &nums, int lo, int hi) {
+    int partition(vector<int>& nums, int lo, int hi) {
     	/** lo < hi */
     	int i=lo;
     	int j=hi+1;

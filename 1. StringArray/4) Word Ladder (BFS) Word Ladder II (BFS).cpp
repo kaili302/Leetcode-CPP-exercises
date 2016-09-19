@@ -20,7 +20,7 @@ public:
     		count++;
 			int size = queue.size();
 			for (int i=0; i<size; i++) {
-				string &word = queue.front();
+				string& word = queue.front();
 
 				for (int j=0; j<word.length(); j++) {
 					char tmp = word[j];
@@ -69,7 +69,7 @@ struct WordNode {
 };
 class Solution {
 private:
-    void pushToQueue(queue<WordNode*> &bfsQueue, deque<WordNode*> &toFree, string &word, WordNode *prev=nullptr) {
+    void pushToQueue(queue<WordNode*>& bfsQueue, deque<WordNode*>& toFree, string& word, WordNode* prev=nullptr) {
         bfsQueue.push(new WordNode{word, prev});
         toFree.push_back(bfsQueue.back());
     }

@@ -16,7 +16,7 @@ return [1,6],[8,10],[15,18].
  */
 class Solution {
 private:
-    static bool compare (const Interval &lit, const Interval &rit) {
+    static bool compare (const Interval& lit, const Interval& rit) {
         return (lit.start == rit.start? lit.end < rit.end: lit.start < rit.start);
     }
 public:
@@ -25,7 +25,7 @@ public:
         if (intervals.empty()) return result;
         sort(intervals.begin(), intervals.end(), compare);
         
-        for (auto &interval: intervals) {
+        for (auto& interval: intervals) {
             if (result.empty() || result.back().end < interval.start) {
                 result.push_back(interval);
             }else if (result.back().end <= interval.end) {

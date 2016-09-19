@@ -5,41 +5,30 @@ Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid
   ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
 */
 
-class Solution {
+class Slution{
+private:
+    bool isNum(string& token){
+        return token != "*" && token != "-" && token != "+" && token != "/";
+    }
+
+    int calculate(int& x, int& y, string& op){
+        if (op == "*") return x * y;
+        else if (op == "/") return x / y;
+        else if (op == "+") return x + y;
+        else return x - y;
+    }
+
 public:
-    int evalRPN(vector<string> &tokens) {
-    	if (tokens.size() == 1) return str2int(tokens.back());
-        stack<int> stack{};
-        for (string &token : tokens) {
-        	if (isOperator(token)) {
-        		int y = stack.top();
-        		stack.pop();
-        		int x = stack.top();
-        		stack.pop();
-        		stack.push(calculate(x, y, token));
-        	}else 
-        		stack.push(str2int(token));
+    int evalRPN(vector<string>& tokens) {
+        stack<string> s;
+        for (auto& token : tokens){
+            if (isNum(token)) s.push(stoi(token));
+            else {
+                int y = s.top(); s.pop();
+                int x = s.top(); s.pop();
+                s.push(calculate(x, y, token));
+            }
         }
-        return stack.top();
+        return s.top();
     }
-
-    bool isOperator (string &token) {
-    	return token == "+" ||token == "-" ||token == "*" ||token == "/";
-    }
-
-    int calculate (int x, int y, string &op) {
-    	// x is the first operand
-    	if (op == "*") return x*y;
-    	else if (op == "/") return x/y;
-    	else if (op == "+") return x+y;
-    	else return x-y;
-	}
-
-	int str2int (string &num) {
-		int tmp;
-		istringstream iss(num);
-		iss >> tmp;
-		return tmp;
-	}
 };
-
