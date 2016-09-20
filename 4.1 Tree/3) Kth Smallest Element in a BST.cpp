@@ -9,16 +9,16 @@
  */
 class Solution {
 public:
-    int kthSmallest(TreeNode *root, int k) {
+    int kthSmallest(TreeNode* root, int k) {
         // BT inorder traversal
         stack<TreeNode*> nodesStack;
-        TreeNode *pNode = root;
+        TreeNode* pNode = root;
         while(pNode || nodesStack.size()){
         	if (pNode){
         		nodesStack.push(pNode);
         		pNode = pNode->left;
         	}else{
-        		TreeNode *pNodeTmp = nodesStack.top();
+        		TreeNode* pNodeTmp = nodesStack.top();
         		nodesStack.pop();
         		pNode = pNodeTmp->right;
         		if (--k == 0) return pNodeTmp->val;

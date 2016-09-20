@@ -10,14 +10,14 @@
 
 class Solution {
 private:
-	void invertTreeHelper(TreeNode *root) {
+	void invertTreeHelper(TreeNode* root) {
   		if (!root) return;
   		swap(root->left, root->right);
   		invertTreeHelper(root->left);
   		invertTreeHelper(root->right);
     }
 public:
-    TreeNode* invertTree(TreeNode *root) {
+    TreeNode* invertTree(TreeNode* root) {
   		invertTreeHelper(root);
   		return root;
     }

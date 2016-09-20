@@ -32,12 +32,12 @@ The flattened tree should look like:
  */
 class Solution {
 public:
-    void flatten(TreeNode *root) {
+    void flatten(TreeNode* root) {
         if (!root) return;
         stack<TreeNode*> nodesStack;
         nodesStack.push(root);
         while(nodesStack.size()){
-          TreeNode *pNode = nodesStack.top();
+          TreeNode* pNode = nodesStack.top();
           nodesStack.pop();
           if (!pNode->left && !pNode->right){
             pNode->right = nodesStack.empty()? nullptr : nodesStack.top();

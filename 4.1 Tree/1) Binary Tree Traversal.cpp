@@ -23,11 +23,11 @@ Vertical Order
 //  Binary Tree Preorder Traversal
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode *root) {
+    vector<int> preorderTraversal(TreeNode* root) {
 		std::vector<int> result;
 		std::stack<TreeNode*> treeStack;
 		if (root) treeStack.push(root);
-		while (!treeStack.empty()) {
+		while (treeStack.size()) {
 			TreeNode* node =treeStack.top();
 			treeStack.pop(); //destroy the pointer
 			result.push_back(node->val);
@@ -41,12 +41,12 @@ public:
 //Binary Tree Inorder Traversal
 class Solution {
 public:
-    std::vector<int> inorderTraversal(TreeNode *root) {
+    std::vector<int> inorderTraversal(TreeNode* root) {
     	std::vector<int> result;
-    	TreeNode *pNode=root;
+    	TreeNode* pNode=root;
     	std::stack<TreeNode*> treeStack;
 
-    	while(pNode || !treeStack.empty()) {
+    	while(pNode || treeStack.size()) {
     		if (pNode) {
     			treeStack.push(pNode);
     			pNode = pNode->left;
@@ -63,17 +63,17 @@ public:
 // Postorder
 class Solution {
 public:
-    std::vector<int> postorderTraversal(TreeNode *root) {
+    std::vector<int> postorderTraversal(TreeNode* root) {
         std::vector<int> result;
     	std::unordered_set<TreeNode*> hashset;
     	std::stack<TreeNode*> treeStack;
-    	TreeNode *pNode=root;
-    	while(pNode || !treeStack.empty()) {
+    	TreeNode* pNode=root;
+    	while(pNode || treeStack.size()) {
 			if (pNode){
 				treeStack.push(pNode);
 				pNode=pNode->left;
 			}else{
-				TreeNode *&topNode=treeStack.top();
+				TreeNode* topNode=treeStack.top();
 				if (hashset.count(topNode) || topNode->right==nullptr) {
 					// rihgt child is null or is already iterated
 					result.push_back(topNode->val);
@@ -91,7 +91,7 @@ public:
 //Level Order
 class Solution {
 public:
-    std::vector<std::vector<int>> levelOrder(TreeNode *root) {
+    std::vector<std::vector<int>> levelOrder(TreeNode* root) {
     	std::vector<std::vector<int>> result;	
     	std::queue<TreeNode*> myQueue;
     	if (root) myQueue.push(root);
@@ -99,7 +99,7 @@ public:
     		int size=myQueue.size();
     		std::vector<int> line;
     		for (int i=0; i<size; i++){
-    			TreeNode *&frontNode=myQueue.front();
+    			TreeNode* frontNode=myQueue.front();
     			line.push_back(frontNode->val);
     			if(frontNode->left) myQueue.push(frontNode->left);
     			if(frontNode->right) myQueue.push(frontNode->right);
@@ -114,7 +114,7 @@ public:
 //Level Order II
 class Solution {
 public:
-    std::vector<std::vector<int>> levelOrderBottom(TreeNode *root) {
+    std::vector<std::vector<int>> levelOrderBottom(TreeNode* root) {
         std::vector<std::vector<int>> result;	
     	std::queue<TreeNode*> myQueue;
     	if (root) myQueue.push(root);
@@ -122,7 +122,7 @@ public:
     		int size=myQueue.size();
     		std::vector<int> line;
     		for (int i=0; i<size; i++){
-    			TreeNode *&frontNode=myQueue.front();
+    			TreeNode* frontNode=myQueue.front();
     			line.push_back(frontNode->val);
     			if(frontNode->left) myQueue.push(frontNode->left);
     			if(frontNode->right) myQueue.push(frontNode->right);
@@ -144,7 +144,7 @@ class Solution {
 private:
     std::unordered_map<int, std::vector<int>> hashmap;
 public:
-    std::vector<std::vector<int>>  verticalOrder(TreeNode *root) {
+    std::vector<std::vector<int>> verticalOrder(TreeNode* root) {
         verticalOrder(root, 0);
         std::vector<std::vector<int>> result;
         for (auto it=hashmap.begin(); it!=hashmap.end(); it++){
@@ -152,9 +152,9 @@ public:
         }
         return result;
     }
-    void verticalOrder(TreeNode *root, int weight){
+    void verticalOrder(TreeNode* root, int weight){
         if (!root) return;
-        if(hashmap.count(weight)) hashmap.insert(std::make_pair(weight, std::vector<int>{}));
+        if(hashmap.count(weight)) hashmap.insert({weight, {}});
         hashmap[weight].push_back(root->val);
         verticalOrder(root->left, weight-1);
         verticalOrder(root->right, weight+1);

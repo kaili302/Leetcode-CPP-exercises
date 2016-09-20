@@ -6,7 +6,7 @@ The longest consecutive path need to be from parent to child (cannot be the reve
 
 class Solution{
 private:
-    void longestConsecutive(TreeNode *pRootIn, int *pAscOut, int *pDesOut, int *pMaxOut) {
+    void longestConsecutive(TreeNode* pRootIn, int* pAscOut, int* pDesOut, int* pMaxOut) {
         if (!pRootIn) return;
         *pAscOut = 1; *pDesOut = 1;
 
@@ -31,7 +31,7 @@ private:
     }
 
 public:
-    int longestConsecutive(TreeNode *root) {
+    int longestConsecutive(TreeNode* root) {
         int maxLen{0}, ascLen{0}, desLen{0};
         longestConsecutive(root, &ascLen, &desLen, &maxLen);
         return maxLen;

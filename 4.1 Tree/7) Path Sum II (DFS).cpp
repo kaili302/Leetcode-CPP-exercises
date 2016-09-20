@@ -15,7 +15,7 @@ For example, given the below binary tree and sum = 22,
  */
 
 class Solution {
-	void pathSum(TreeNode* root, int sum, vector<int> &path, vector<vector<int>> &result) {
+	void pathSum(TreeNode* root, int sum, vector<int>& path, vector<vector<int>>& result) {
 		if (!root) return;
 		if (root->val == sum && !root->left && !root->right){
 			path.push_back(root->val);

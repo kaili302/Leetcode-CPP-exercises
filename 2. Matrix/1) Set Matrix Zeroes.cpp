@@ -4,7 +4,7 @@ Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do
 
 class Solution {
 public:
-    void setZeroes(std::vector<std::vector<int>> &matrix) {
+    void setZeroes(std::vector<std::vector<int>>& matrix) {
     	assert(matrix.size());
     	int HE = matrix.size();
     	int WI = matrix[0].size();
