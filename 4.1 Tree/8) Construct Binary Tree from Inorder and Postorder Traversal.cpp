@@ -19,7 +19,7 @@ private:
 
 	TreeNode* buildTree(vector<int>& postorder, int posLo, int posHi, vector<int>& inorder, int inLo, int inHi) {
 		if (posLo > posHi) return nullptr;
-		TreeNode *root = newNode(postorder[posHi]);
+		TreeNode* root = newNode(postorder[posHi]);
 		int leftSize = hashmap[postorder[posHi]] - inLo;
 		root->left = buildTree(postorder, posLo, posLo + leftSize -1, inorder, inLo, inLo + leftSize -1);
 		root->right = buildTree(postorder, posLo + leftSize, posHi - 1, inorder, inLo + leftSize +1, inHi);

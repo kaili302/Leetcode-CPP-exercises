@@ -20,7 +20,7 @@ private:
 
 	TreeNode* buildTree(vector<int>& preorder, int preLo, int preHi, vector<int>& inorder, int inLo, int inHi) {
 		if (preLo > preHi) return nullptr;
-		TreeNode *root = newNode(preorder[preLo]);
+		TreeNode* root = newNode(preorder[preLo]);
 		int leftSize = hashmap[preorder[preLo]] - inLo;
 		root->left = buildTree(preorder, preLo + 1, preLo + leftSize, inorder, inLo, inLo + leftSize -1);
 		root->right = buildTree(preorder, preLo + leftSize + 1, preHi, inorder, inLo + leftSize +1, inHi);

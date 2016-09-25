@@ -1,11 +1,9 @@
-
-
 class ArrayContainer{
 private:
-    vector<int> *pList;
+    vector<int>* pList;
     int index;
 public:
-    ArrayContainer(vector<int> *pListIn): pList{pListIn}, index{0}{}
+    ArrayContainer(vector<int>* pListIn): pList{pListIn}, index{0}{}
     
     int& top(){
         return (*pList)[index];
@@ -16,21 +14,19 @@ public:
     }
 
     bool isEmpty(){
-        return index >= (*pList).size();
+        return index >= pList->size();
     }
 };
-
 
 class cmp{
 public:
-    bool operator()(ArrayContainer &node1, ArrayContainer &node2){
+    bool operator()(ArrayContainer& node1, ArrayContainer& node2){
         return node1.top() > node2.top();
     }
-    bool operator()(ArrayContainer *&node1, ArrayContainer *&node2){
+    bool operator()(ArrayContainer*& node1, ArrayContainer*& node2){
         return node1->top() > node2->top();
     }
 };
-
 
 class Solution {
 public:
@@ -40,7 +36,7 @@ public:
 
         priority_queue<ArrayContainer, vector<ArrayContainer>, cmp> minHeap;
 
-        for (auto &tmpList : lists) {
+        for (auto& tmpList : lists) {
             if (tmpList.empty()) continue;
             minHeap.emplace(&tmpList);
         }
@@ -64,7 +60,7 @@ public:
 
         priority_queue<ArrayContainer*, vector<ArrayContainer*>, cmp> minHeap;
 
-        for (auto &tmpList : lists) {
+        for (auto& tmpList : lists) {
             if (tmpList.empty()) continue;
             minHeap.push(new ArrayContainer{&tmpList});
         }
@@ -72,7 +68,7 @@ public:
         vector<int> ret;
 
         while(minHeap.size()) {
-            ArrayContainer *ac = minHeap.top();
+            ArrayContainer* ac = minHeap.top();
             minHeap.pop();
             ret.push_back(ac->top());
             ac->pop();
