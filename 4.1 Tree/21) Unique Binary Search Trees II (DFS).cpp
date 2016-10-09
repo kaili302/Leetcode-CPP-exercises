@@ -23,9 +23,9 @@ private:
 		for (int i=start; i<=end; i++) {
 			std::vector<TreeNode*> leftList = generateTrees(start, i-1);
 			std::vector<TreeNode*> rightList = generateTrees(i+1, end);
-			for (TreeNode *leftNode:leftList) {
-				for (TreeNode *rightNode:rightList) {
-					TreeNode *newNode = new TreeNode{i};
+			for (auto& leftNode:leftList) {
+				for (auto& rightNode:rightList) {
+					TreeNode* newNode = new TreeNode{i};
 					newNode->left = leftNode;
 					newNode->right = rightNode;
 					trees.push_back(newNode);
@@ -37,7 +37,7 @@ private:
 
 public:
     std::vector<TreeNode*> generateTrees(int n) {
-        if (n==0) return std::vector<TreeNode*>();
+        if (n==0) return {};
     	return generateTrees(1, n);
     }
 };

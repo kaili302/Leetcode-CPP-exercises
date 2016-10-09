@@ -2,7 +2,7 @@ class TrieNode {
 public:
     char m_val;
     bool m_isLeaf = false;
-    TrieNode *m_kids[26] = {0};
+    TrieNode* m_kids[26] = {0};
     TrieNode(char c) : m_val{c}{ }
 };
 
@@ -23,12 +23,12 @@ public:
         root = createTrieNode();
     }
     ~Trie(){
-        for (auto &pNode : toDelete) 
+        for (auto& pNode : toDelete) 
             delete pNode;
     }
     
     void insert(string word) {
-        TrieNode *curr = root;
+        TrieNode* curr = root;
         for (int i = 0; i < word.length(); i++){
             if (!curr->m_kids[word[i]-'a']) 
                 curr->m_kids[word[i]-'a'] = createTrieNode(word[i]);
@@ -38,7 +38,7 @@ public:
     }
 
     bool search(string word) {
-        TrieNode *curr = root;
+        TrieNode* curr = root;
         for (int i = 0; i < word.length(); i++){
             if (!curr->m_kids[word[i]-'a']) return false;
             curr = curr->m_kids[word[i]-'a'];
@@ -47,7 +47,7 @@ public:
     }
 
     bool startsWith(string prefix) {
-        TrieNode *curr = root;
+        TrieNode* curr = root;
         for (int i = 0; i < prefix.length(); i++){
             if (!curr->m_kids[prefix[i]-'a']) return false;
             curr = curr->m_kids[prefix[i]-'a'];

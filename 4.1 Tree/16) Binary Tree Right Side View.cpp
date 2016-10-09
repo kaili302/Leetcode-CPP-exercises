@@ -18,7 +18,7 @@ public:
         while (bfsQueue.size()){
         	int size =bfsQueue.size();
         	for (int i=0; i<size; i++) {
-				TreeNode *pNode = bfsQueue.front();
+				TreeNode* pNode = bfsQueue.front();
 				bfsQueue.pop();
 				if (i==size-1) result.push_back(pNode->val);
 				if (pNode->left) bfsQueue.push(pNode->left);

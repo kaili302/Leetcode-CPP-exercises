@@ -15,7 +15,7 @@ public:
     }
     
 private:
-    void serialize(TreeNode* root, std::ostringstream &oss) {
+    void serialize(TreeNode* root, std::ostringstream& oss) {
         if (root==nullptr) {
             oss<<"# ";
             return ;
@@ -26,12 +26,12 @@ private:
         //delete root;
     }
 
-    TreeNode* deserialize(std::istringstream &iss) {
+    TreeNode* deserialize(std::istringstream& iss) {
         std::string val;
         if(!(iss>>val)||val=="#") {
             return nullptr;
         }
-        TreeNode *pNode=new TreeNode{parseInt(val)};
+        TreeNode* pNode=new TreeNode{parseInt(val)};
         pNode->left=deserialize(iss);
         pNode->right=deserialize(iss);
         return pNode;

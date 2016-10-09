@@ -10,7 +10,7 @@ only letters a-z or .. A . means it can represent any one letter.
 
 class TrieNode{
 public:
-	TrieNode *kids[26] = {0};
+	TrieNode* kids[26] = {0};
 	bool isLeaf = false;
 	char val;
 	TrieNode(char v): val{v}{}
@@ -18,7 +18,7 @@ public:
 
 class WordDictionary {
 private:
-	TrieNode *root;
+	TrieNode* root;
 	deque<TrieNode*> toDelete;
 
 	TrieNode* createTrieNode(char c = ' '){
@@ -26,7 +26,7 @@ private:
 		return toDelete.back();
 	}
 
-	bool search(string word, int idx, TrieNode *curr) {
+	bool search(string word, int idx, TrieNode* curr) {
 		for (int i = idx; i < word.length(); i++){
 			if (word[i] == '.'){
 				for (int c = 0; c < 26; c++){
@@ -52,7 +52,7 @@ public:
 	}
 
     void addWord(string word) {
-		TrieNode *curr = root;
+		TrieNode* curr = root;
 		for (int i = 0; i< word.length(); i++ ){
 			if (!curr->kids[word[i]-'a'])
 				curr->kids[word[i]-'a'] = createTrieNode(word[i]);

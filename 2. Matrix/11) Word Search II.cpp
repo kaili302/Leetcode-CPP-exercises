@@ -18,7 +18,7 @@ class TrieNode{
 public:
 	char m_val;
 	string m_word;
-	TrieNode *m_kids[26] = {0};
+	TrieNode* m_kids[26] = {0};
 	TrieNode () {
 	}
 	TrieNode(int val): m_val{val}, m_word{""}{}
@@ -26,7 +26,6 @@ public:
 
 
 class Solution {
-
 private:
 	deque<TrieNode*> toDelete;
 	TrieNode* createTrieNode(char c =  ' '){
@@ -34,10 +33,10 @@ private:
 		return toDelete.back();
 	}
 
-	TrieNode* buildWordsTrie(vector<string> &words){
-		TrieNode *root = createTrieNode();
-		for (auto &word : words){
-			TrieNode *curr = root;
+	TrieNode* buildWordsTrie(vector<string>& words){
+		TrieNode* root = createTrieNode();
+		for (auto& word : words){
+			TrieNode* curr = root;
 			for (int i = 0; i < word.length(); i++){
 				if (!curr->m_kids[word[i]-'a'])	
 					curr->m_kids[word[i]-'a'] = createTrieNode(word[i]);			
@@ -49,7 +48,7 @@ private:
 	}
 
 	const vector<pair<int, int>> dirs{{-1, 0},{1, 0},{0, -1},{0, 1}};
-	void findWords(vector<vector<char>> &board, int r, int c, int HE, int WI, TrieNode *curr, unordered_set<string> &result) {
+	void findWords(vector<vector<char>>& board, int r, int c, int HE, int WI, TrieNode* curr, unordered_set<string>& result) {
 		if (!curr) return;
 
 		// curr trie node is leaf
@@ -69,8 +68,8 @@ private:
 	}
 
 public:
-    vector<string> findWords(vector<vector<char>> &board, vector<string> &words) {
-        TrieNode *root = buildWordsTrie(words);
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        TrieNode* root = buildWordsTrie(words);
         int HE = board.size();
         int WI = board[0].size();
 
@@ -80,7 +79,7 @@ public:
         		findWords(board, r, c, HE, WI, root->m_kids[board[r][c]-'a'], result);
         	}
         }
-        return vector<string>(result.begin(), result.end());
+        return {result.begin(), result.end()};
     }
 };
 

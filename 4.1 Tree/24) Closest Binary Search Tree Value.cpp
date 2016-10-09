@@ -30,3 +30,30 @@ public:
   }
 };
 
+
+
+
+class Solution{
+public:
+  int closestValue(TreeNode* pRoot, int val){
+    TreeNode* pCurr = pRoot;
+    TreeNode* pBigPrev = nullptr;
+
+    while (pCurr){
+      if (pCurr->val == val) 
+        return val;
+      else if (val < pCurr->val){
+        if (!pCurr->left) return pCurr->val;
+        else {
+          pBigPrev = pCurr;
+          pCurr = pCurr->left;
+        }
+      }else{
+        if (!pCurr->right) 
+          return pBigPrev ? (val - pCurr->val < pBigPrev->val - val ? pCurr->val : pBigPrev->val) : pCurr->val;
+        pCurr = pCurr->right;
+      }
+    }
+    return 0;
+  }
+};

@@ -1,21 +1,7 @@
 /*
-Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
-Example 1:
-11110
-11010
-11000
-00000
-Answer: 1
-
-Example 2:
-11000
-11000
-00100
-00011
-Answer: 3
-*/
-/*
-Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. 
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. 
+You may assume all four edges of the grid are all surrounded by water.
 Example 1:
 11110
 11010
@@ -33,12 +19,11 @@ Answer: 3
 
 
 // bfs 
-
 class Solution {
 private:
     const vector<pair<int, int>> dirs{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    void visit(vector<vector<char>>& grid, vector<vector<bool>> &visited, int r, int c, int HE, int WI){
+    void visit(vector<vector<char>>& grid, vector<vector<bool>>& visited, int r, int c, int HE, int WI){
         queue<pair<int, int>> q;
         q.push({r, c});
         visited[r][c] = true;
@@ -46,7 +31,7 @@ private:
             r = q.front().first;
             c = q.front().second;
             q.pop();
-            for (auto &dir: dirs){
+            for (auto& dir: dirs){
                 int x = r + dir.first, y = c + dir.second;
                 if (x < 0 || x >= HE || y < 0 || y >= WI || grid[x][y] == '0' || visited[x][y])
                     continue;           

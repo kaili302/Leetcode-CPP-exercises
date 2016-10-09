@@ -41,7 +41,7 @@ private:
 	}
 
 public:
-    NumArray(vector<int> &nums): BIT(nums.size()+1, 0) {
+    NumArray(vector<int>& nums): BIT(nums.size()+1, 0) {
         this->nums = nums;
         for (int i = 0; i < nums.size(); i++){
         	addToBIT(i, nums[i]);
@@ -63,8 +63,8 @@ public:
 class NumArray {
 public:
     vector<vector<int>> BIT;
-    vector<vector<int>> *pNums;
-
+    vector<vector<int>>* pNums;
+   
     int getLowBit (int num) { return num & (-num); }
 
     void updateBIT(int r, int c, int val, int HE, int WI) {
@@ -86,7 +86,7 @@ public:
     }
 
 public:
-    NumArray(vector<vector<int>> &nums): BIT(nums.size()+1, vector<int>(nums[0].size()+1, 0)) {
+    NumArray(vector<vector<int>>& nums): BIT(nums.size()+1, vector<int>(nums[0].size()+1, 0)) {
         pNums = &nums;
         int HE = nums.size(), WI = nums[0].size();
         for (int r = 0; r < HE; r++){

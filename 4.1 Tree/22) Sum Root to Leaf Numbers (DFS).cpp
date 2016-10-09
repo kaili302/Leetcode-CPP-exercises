@@ -11,7 +11,7 @@ Return the sum = 12 + 13 = 25.
 
 class Solution {
 private:
-	void sumNumbers(TreeNode *root, int sum, int &totalSum) {
+	void sumNumbers(TreeNode* root, int sum, int& totalSum) {
         if (!root) return;
         sum = sum*10 + root->val;
         if (root->left == nullptr && root->right == nullptr)
@@ -22,7 +22,7 @@ private:
         }
     }
 public:
-    int sumNumbers(TreeNode *root) {
+    int sumNumbers(TreeNode* root) {
     	int totalSum = 0;
     	sumNumbers(root, 0, totalSum);
         return totalSum;

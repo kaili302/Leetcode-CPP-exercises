@@ -9,14 +9,14 @@
 class Solution {
 
 public:
-    void connect(TreeLinkNode *root) {
+    void connect(TreeLinkNode* root) {
         if (!root) return;
-        TreeLinkNode *pPrev = root;
+        TreeLinkNode* pPrev = root;
         TreeLinkNode dummy{0};
-        TreeLinkNode *pCurr = &dummy;
+        TreeLinkNode* pCurr = &dummy;
 
         while (pPrev){
-          	TreeLinkNode *pTmp = nullptr;
+          	TreeLinkNode* pTmp = nullptr;
           	while (pPrev) {
           		if (pPrev->left == nullptr && pPrev->right == nullptr) {
           			pPrev = pPrev->next;
@@ -32,10 +32,10 @@ public:
           			pCurr->next = pPrev->right;
           			pCurr = pCurr->next;
           		}
-				pPrev = pPrev->next;
+				      pPrev = pPrev->next;
         	}
         	pPrev = pTmp;
         	pCurr = &dummy;
-		}
+		  }
     }
 };

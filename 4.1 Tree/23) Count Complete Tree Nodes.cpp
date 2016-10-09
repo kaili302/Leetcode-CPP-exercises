@@ -8,7 +8,7 @@ public:
     	return countNodes(root->right) + countNodes(root->left) + 1;
     }
 
-    int countLeftNodes(TreeNode *left){
+    int countLeftNodes(TreeNode* left){
     	int height = 0;
     	while (left) {
     		height++;
@@ -17,7 +17,7 @@ public:
     	return height;
     }
 
-    int countRightNodes(TreeNode *right){
+    int countRightNodes(TreeNode* right){
     	int height = 0;
     	while (right) {
     		height++;

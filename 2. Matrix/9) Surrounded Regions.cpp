@@ -27,7 +27,7 @@ private:
             r = q.front().first;
             c = q.front().second;
             q.pop();
-            for (auto &dir : dirs){
+            for (auto& dir : dirs){
                 int x = r + dir.first, y = c + dir.second;
                 if (x < 0 || x >= HE || y < 0 || y >= WI || board[x][y] != 'O') 
                     continue;
@@ -46,7 +46,6 @@ public:
         int WI = board[0].size();
 
         // Traversal up side and down edge, mark unsurrounded region as '#'
-        
         for (int c = 0; c < WI-1; c++) {
             if (board[0][c] == 'O') 
                 visit(board, 0, c, HE, WI);

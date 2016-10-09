@@ -12,9 +12,9 @@ You may only use constant extra space.
 You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
 For example,
 Given the following perfect binary tree,
-                 1
-             /  \
-            2    3
+            1
+           /  \
+          2    3
          / \  / \
         4  5  6  7
 After calling your function, the tree should look like:
@@ -28,13 +28,13 @@ After calling your function, the tree should look like:
 
 class Solution {
 public:
-    void connect(TreeLinkNode *root) {
+    void connect(TreeLinkNode* root) {
         if (!root) return;
-        TreeLinkNode *pPrev = root;
+        TreeLinkNode* pPrev = root;
         TreeLinkNode dummy{0};
-        TreeLinkNode *pCurr = &dummy;
+        TreeLinkNode* pCurr = &dummy;
         while (pPrev->left) {
-            TreeLinkNode *pTmp = pPrev->left;
+            TreeLinkNode* pTmp = pPrev->left;
             while (pPrev){
                 pCurr->next = pPrev->left;
                 pCurr = pCurr->next;

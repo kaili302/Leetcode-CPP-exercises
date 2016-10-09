@@ -5,11 +5,11 @@ Note: next() and hasNext() should run in average O(1) time and uses O(h) memory,
 */
 class BSTIterator {
 private:
-	TreeNode *m_pRoot;
+	TreeNode* m_pRoot;
 	std::stack<TreeNode*> m_stack;
-	TreeNode *m_pCurr;
+	TreeNode* m_pCurr;
 public:
-    BSTIterator(TreeNode *root): m_pRoot{root} {
+    BSTIterator(TreeNode* root): m_pRoot{root} {
     	m_pCurr = root;
     	while (m_pCurr) {
     		m_stack.push(m_pCurr);
@@ -24,7 +24,7 @@ public:
 
     /** @return the next smallest number */
     int next() {
-        TreeNode *pNext = m_stack.top();
+        TreeNode* pNext = m_stack.top();
         int nextNum = pNext->val;
         m_stack.pop();
 

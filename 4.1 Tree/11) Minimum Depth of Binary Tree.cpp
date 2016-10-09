@@ -15,7 +15,7 @@ public:
 		while(treeQueue.size()) {
 			int size = treeQueue.size();
 			for (int i=0; i<size; i++){
-				TreeNode *pNode = treeQueue.front();
+				TreeNode* pNode = treeQueue.front();
 				treeQueue.pop();
 				if (pNode->left==nullptr && pNode->right==nullptr) return depth;
 				if (pNode->left) treeQueue.push(pNode->left);

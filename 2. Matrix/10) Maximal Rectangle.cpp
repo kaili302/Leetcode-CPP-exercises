@@ -17,7 +17,7 @@ Return 6.
 
 class Solution {
 private:
-	int maxArea(vector<int> &hist){
+	int maxArea(vector<int>& hist){
 		stack<int> s;
 		int maxArea = 0;
 		int i = 0;
@@ -46,7 +46,7 @@ public:
     	vector<int> heights(matrix[0].size(), 0);
 
     	int maxRecArea = 0;
-    	for (auto &row : matrix){
+    	for (auto& row : matrix){
     		for (int i = 0; i < row.size(); i++){
     			if (row[i] == '1') heights[i] += 1;
     			else heights[i] = 0;
@@ -56,6 +56,8 @@ public:
     	return maxRecArea;
     }
 };
+
+
 
 
 

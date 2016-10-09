@@ -28,15 +28,15 @@ private:
 		for (int i = lo; i < mid; i++){
 			pDummy = pDummy->next;
 		}
-		TreeNode *pRoot = new TreeNode(pDummy->next->val);
+		TreeNode* pRoot = new TreeNode(pDummy->next->val);
 		pRoot->left = sortedListToBST(head, lo, mid - 1);
 		pRoot->right = sortedListToBST(pDummy->next->next, mid + 1, hi);
 		return pRoot;
 	}
 
 public:
-    TreeNode* sortedListToBST(ListNode *head) {
-    	ListNode *tmp = head;
+    TreeNode* sortedListToBST(ListNode* head) {
+    	ListNode* tmp = head;
     	int length = 0;
     	while (tmp) {
     		length++;

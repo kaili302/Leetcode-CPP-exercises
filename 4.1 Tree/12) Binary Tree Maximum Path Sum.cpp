@@ -14,7 +14,7 @@ Return 6.
 
 class Solution {
 private:
-	int maxPathSum(TreeNode *&root, int &maxOut) {
+	int maxPathSum(TreeNode* root, int& maxOut) {
 		if (!root) return 0;
 		int leftMax = maxPathSum(root->left, maxOut);
 		int rightMax = maxPathSum(root->right, maxOut);
@@ -24,7 +24,7 @@ private:
 		return std::max(leftMax, rightMax)+root->val;
     }
 public:
-    int maxPathSum(TreeNode *root) {	
+    int maxPathSum(TreeNode* root) {	
     	if (!root) return 0;
     	int maxSum=root->val;
     	maxPathSum(root, maxSum);

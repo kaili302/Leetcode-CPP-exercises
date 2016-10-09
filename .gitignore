@@ -2,6 +2,7 @@ run
 main
 main*
 includes.hpp
+header.hpp
 TreeCodec.cpp
 CPP
 .DS_Store
