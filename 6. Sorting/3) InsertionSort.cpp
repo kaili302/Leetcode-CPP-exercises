@@ -11,11 +11,11 @@ public:
 		 dummy.next = head;
 		 head = &dummy;
 
-		 ListNode *pCurr = head->next;
-		 ListNode *pPrev = head;
+		 ListNode* pCurr = head->next;
+		 ListNode* pPrev = head;
 
 		 while (pCurr !=nullptr) {
-		 	ListNode *pNode = head;
+		 	ListNode* pNode = head;
 		 	while (pNode->next->val < pCurr->val) {
 		 		pNode = pNode->next;
 		 	}

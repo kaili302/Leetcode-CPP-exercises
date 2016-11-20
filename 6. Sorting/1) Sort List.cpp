@@ -7,17 +7,22 @@ Sort a linked list in O(n log n) time using constant space complexity.
 // merge sort Linkedlist takes o(1) space
 class Solution {
 private:
-	ListNode* mergeSort(ListNode* head, ListNode* end) {
-		if (head == end) return head;
+	ListNode* getMid(ListNode* head, ListNode* end){
 		ListNode* fast = head->next;
 		ListNode* mid = head;
 		while (fast != end && fast != end->next) {
 			fast = fast->next->next;
 			mid = mid->next;
 		}
-		ListNode * head2 = mergeSort(mid->next, end);
+		return mid;
+	}
+
+	ListNode* mergeSort(ListNode* head, ListNode* end) {
+		if (head == end) return head;
+		ListNode* mid = getMid(head, end);
+		ListNode* head2 = mergeSort(mid->next, end);
 		mid->next = nullptr;
-		ListNode * head1 = mergeSort(head, mid);
+		ListNode* head1 = mergeSort(head, mid);
 		return merge (head1, head2);
 	}
 

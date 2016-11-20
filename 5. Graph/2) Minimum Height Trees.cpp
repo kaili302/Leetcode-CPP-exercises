@@ -36,41 +36,31 @@ return [3, 4]
 
 
 class Solution{
+    bool isLeaf(unordered_set<int>& node){ return node.size() == 1; }
 public:
     vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
-        if (n == 1)
-            return {0};
-        // no duplicates in edges
-        vector<unordered_set<int>> nodes(n,unordered_set<int>{});
+        if (n == 1) return {0};
+        vector<unordered_set<int>> graph(n, unordered_set<int>{});
         for (auto& edge : edges){
-            nodes[edge.first].insert(edge.second);
-            nodes[edge.second].insert(edge.first);
+            graph[edge.first].insert(edge.second);
+            graph[edge.second].insert(edge.first);
         }
+    
         queue<int> leaves;
-        for (int i = 0; i < n; i++){
-            if (nodes[i].size() == 1){
-                leaves.push(i);
-            }
-        }
-        int count = n;
-        while(leaves.size() && count > 2){
+        for (int i = 0; i < n; i++)
+            if (isLeaf(graph[i])) leaves.push(i); 
+        while(leaves.size() && n > 2){
             int size = leaves.size();
-            for (int i = 0; i < size; i++){
+            n -= size;
+            while(size--){
                 int leaf = leaves.front();
-                leaves.pop();
-                int connected = *(nodes[leaf].begin());
-                nodes[leaf].erase(connected);    
-                nodes[connected].erase(leaf);
-                if(nodes[connected].size() == 1)
-                    leaves.push(connected);
+                leaves.pop();    
+                int parent = *(graph[leaf].begin());
+                graph[parent].erase(leaf);
+                if (isLeaf(graph[parent])) leaves.push(parent);
             }
-            count -= size;
         }
-        vector<int> res;
-        while(leaves.size()){
-            res.push_back(leaves.front());
-            leaves.pop();
-        }
-        return res;
+        if (leaves.size() == 1) return {leaves.front()};
+        return {leaves.front(), leaves.back()};
     }
 };

@@ -18,14 +18,14 @@ public:
         
 		int minNum{nums[0]}; 
 		int maxNum{nums[0]};
-		for (auto &num : nums) {
+		for (auto& num : nums) {
 			minNum = min(num, minNum);
 			maxNum = max(num, maxNum);
 		}
 		// max_Gap must be at least (A_max-A_min)/A.length+1
 		int avgGap=(maxNum - minNum)/nums.size() + 1;
 		Bucket buckets[nums.size()+1];
-		for (auto &num: nums) {
+		for (auto& num: nums) {
 			int index = (num-minNum)/avgGap;
 			if (!buckets[index].isSet) {
 				buckets[index].min = num;
@@ -37,7 +37,7 @@ public:
 			}
 		}
 
-		int *pMax=nullptr;
+		int* pMax=nullptr;
 		int maxGap=0;
 		for (int i=0; i< nums.size()+1; i++){	
 			if (!buckets[i].isSet) continue;

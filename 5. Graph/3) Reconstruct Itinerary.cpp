@@ -19,7 +19,7 @@ Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it
 typedef unordered_map<string, priority_queue<string, vector<string>, greater<string>>> Graph;
 class Solution{
   void buildGraph(vector<pair<string, string>>& tickets, Graph& graph){
-        for (auto& ticket : tickets){
+    for (auto& ticket : tickets){
       if (!graph.count(ticket.first)) 
         graph.insert({ticket.first, priority_queue<string, vector<string>, greater<string>>{}});
       graph[ticket.first].push(ticket.second);
