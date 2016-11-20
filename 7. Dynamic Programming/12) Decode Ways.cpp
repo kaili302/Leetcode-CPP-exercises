@@ -15,21 +15,24 @@ The number of ways decoding "12" is 2.
 class Solution{
 private:
 	bool isLetter(string s){
-		return s[0]!= '0' && stoi(s) <= 26;
+		return s[0] != '0' && stoi(s) <= 26;
 	}
 public:
-    int numDecodings(string s) {
-     	if (s.empty()) return 0;
-
+	int numDecodings(string s) {
+	    if (s.empty()) return 0;
 		vector<int> dp(s.size() + 1, 0);
 		dp[0] = 1;
 		for (int i = 1; i <= s.size(); i++){
-			if (s[i-1] == '0'){
-				if (i <= 1 || !isLetter(s.substr(i - 2, 2))) return 0;
-				dp[i] = dp[i-2];
-			}else
-				dp[i] = dp[i-1] + (i >= 2 && isLetter(s.substr(i-2, 2))? dp[i-2] : 0);
+			if (i != s.size() && !s[i])
+				continue;
+			if (isLetter(s.substr(i-1, 1)))
+				dp[i] += dp[i-1];
+			if (i > 1 && isLetter(s.substr(i-2, 2)))
+				dp[i] += dp[i-2];
+
 		}
-		return dp[s.size()];
-    }
+		return dp.back();
+	}
 };
+
+// place can be reduced to o(1)

@@ -8,15 +8,17 @@ can rob tonight without alerting the police.
 */
 class Solution{
 public:
- 	int rob(vector<int> &nums) {
+ 	int rob(vector<int>& nums) {
  		if (nums.empty()) return 0;
- 		int maxRobThis = 0;
- 		int maxSkipThis = 0;
- 		for (auto &num : nums){
- 			int tmp = maxSkipThis;
- 			maxSkipThis = max(maxSkipThis, maxRobThis);
- 			maxRobThis = tmp + num;
+ 		int robThisMax = nums[0];
+ 		int skipThisMax = 0;
+ 		for (int i = 1; i < nums.size(); i++){
+ 			int swap = robThisMax;
+ 			robThisMax = max(robThisMax, skipThisMax + nums[i]);
+ 			skipThisMax = max(skipThisMax, swap);
  		}
- 		return max(maxRobThis, maxSkipThis);
+ 		return max(robThisMax, skipThisMax);
  	}
 };
+
+

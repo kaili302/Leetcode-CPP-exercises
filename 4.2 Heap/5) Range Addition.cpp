@@ -20,7 +20,7 @@ private:
 	}
 
 public:
-	vector<int> getModifiedArray(int length, vector<vector<int>> &updates) {
+	vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
 		//sort(updates.begin(), updates.end(), compareUpdates);
 
 		vector<int> result(length, 0);

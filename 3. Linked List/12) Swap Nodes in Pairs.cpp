@@ -14,22 +14,22 @@ Your algorithm should use only constant space. You may not modify the values in 
  */
 class Solution {
 public:
-    ListNode* swapPairs(ListNode *head) {
-    	if(!head||!head->next) return head;
+    ListNode* swapPairs(ListNode* head) {
+    	if(!head || !head->next) return head;
     	ListNode dummy{0};
-    	dummy.next=head;
-    	ListNode *pHead=&dummy;
-    	ListNode *prev=head;
-    	ListNode *curr=head->next;
+    	dummy.next = head;
+    	ListNode* pHead = &dummy;
+    	ListNode* prev = head;
+    	ListNode* curr = head->next;
     	while (curr) {
-    		ListNode *tmp=curr->next;
-    		curr->next=prev;
-    		prev->next=tmp;
-    		pHead->next=curr;
-    		pHead=prev;
-    		prev=prev->next;
+    		ListNode* tmp = curr->next;
+    		curr->next = prev;
+    		prev->next = tmp;
+    		pHead->next = curr;
+    		pHead = prev;
+    		prev = prev->next;
     		if (!prev) break;
-    		curr=prev->next;
+    		curr = prev->next;
     	}
     	return dummy.next;
     }

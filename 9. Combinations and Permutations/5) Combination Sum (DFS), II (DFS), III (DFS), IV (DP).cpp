@@ -14,59 +14,6 @@ A solution set is:
   [2, 2, 3]
 ]
 */
-// there are repetitions in C
-class VectorHash{
-public:
-  size_t operator()(const vector<int>& nums) const {
-    size_t hashval= 0;
-    for (int i = 0; i < nums.size(); i++){
-      if (i % 2) hashval ^= (nums[i] >> 1);
-      else hashval ^= (nums[i] << 1);
-    }
-    return hashval;
-  }
-};
-
-class VectorEqual{
-public:
-  bool operator()(const vector<int>& nums1, const vector<int>& nums2) const{
-    if (nums1.size() != nums2.size()) return false;
-    for (int i = 0; i < nums1.size(); i++){
-      if(nums1[i] != nums2[i]) return false;
-    }
-    return true;
-  }
-};
-
-typedef unordered_set<vector<int>, VectorHash, VectorEqual> hashset_t;
-class Solution {
-private:
-    void combinationSum(vector<int>& candidates, int idx, int target, vector<int>& combination, hashset_t& result){
-        if (target == 0){
-            result.insert(combination);
-            return;
-        }
-
-        for (int i = idx; i < candidates.size() && candidates[i] <= target; i++){
-            combination.push_back(candidates[i]);
-            combinationSum(candidates, i, target - candidates[i], combination, result);
-            combination.pop_back();
-        }
-    }
-public:
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        if (candidates.empty()) return {{}};
-        hashset_t result;
-        vector<int> combination; 
-        sort(candidates.begin(), candidates.end());
-        combinationSum(candidates, 0, target, combination, result);
-          return {result.begin(), result.end()};
-    }
-};
-
-
-
-// or 
 
 class Solution {
 private:
@@ -134,28 +81,27 @@ Example 2: Input: k = 3, n = 9 Output: [[1,2,6], [1,3,5], [2,3,4]]
 
 class Solution {
 private:
-  void combinationSum3(int k, int start, int target, vector<int>& combination ,vector<vector<int>>& combinations) {
-		if (k == 0){
-			if (target == 0) combinations.push_back(combination);
-			return;
-		}
-		for (int i = start; i <= 9 && i <= target; i++){
-			combination.push_back(i);
-			combinationSum3(k - 1, i + 1, target - i, combination, combinations);
-			combination.pop_back();
-		}
-	}
+  void combinationSum3(int idx, int k, int target, vector<int>& v, vector<vector<int>>& result){
+    if (!k){
+      if (!target)
+        result.push_back(v);
+      return;
+    }
+    for (int i = idx; i <= 9 && i <= target; i++){
+      v.push_back(i);
+      combinationSum3(i + 1, k - 1, target - i, v, result);
+      v.pop_back();
+    }
+  }
+
 public:
     vector<vector<int>> combinationSum3(int k, int n) {
-  		// 1 + 2 +..+ 9 == 45
-  		if (n > 45) return {};
-  		vector<int> combination;
-  		vector<vector<int>> combinations;
-  		combinationSum3(k, 1, n, combination, combinations);
-  		return combinations;
+      vector<vector<int>> result;
+      vector<int> v;
+      combinationSum3(1, k, n, v, result);
+      return result;
     }
 };
-
 
 /*
 Given an integer array with all positive numbers and no duplicates, 
@@ -180,24 +126,15 @@ Therefore the output is 7.
 class Solution {
 public:
     int combinationSum4(vector<int>& nums, int target) {
-    	vector<int> dp(target + 1, 0);
-    	dp[0] = 1;
-  		for (int i = 0; i <= target; i++){
-  			for(auto& num : nums){
-  				if (i - num < 0) break;  															
-  				dp[i] += dp[i-num];
-  			}
-  		}
-  		return dp[target];
+      vector<int> dp(target + 1, 0);
+      dp[0] = 1;
+      sort(nums.begin(), nums.end());
+      for (int i = 1; i <= target; i++){
+        for (auto& num : nums){
+          if (num > i) break;
+          dp[i] += dp[i-num];
+        }
+      }
+      return dp[target];
     }
 };
-
-
-
-
-
-
-
-
-
-

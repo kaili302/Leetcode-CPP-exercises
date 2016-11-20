@@ -3,18 +3,17 @@ Reverse Linked List (Java)
 */
 class Solution {
 public:
-    ListNode* reverseList(ListNode *head) {
+    ListNode* reverseList(ListNode* head) {
   		if (!head) return head;
-  		ListNode *curr=head->next;
-  		ListNode *prev=head;
-  		ListNode *tmp=nullptr;
+  		ListNode* curr = head->next;
+  		ListNode* prev = nullptr;
+
   		while (curr) {
-  			tmp=curr->next;
-  			curr->next=prev;
-  			prev=curr;
-			curr=tmp;
+  			ListNode* tmp = curr->next;
+  			curr->next = prev;
+  			prev = curr;
+			  curr = tmp;
   		}
-  		head.next=nullptr;
   		return prev;
     }
 };
@@ -29,25 +28,27 @@ Analysis
 
 class Solution {
 public:
-    ListNode* reverseBetween(ListNode *head, int m, int n) {
-  		if (m==n||!head) return head;
-  		ListNode fakeHead{0};
-  		ListNode *pFakeHead=&fakeHead;
-  		pFakeHead->next=head;
-  		for (int i=1; i<m; i++) {
-  			pFakeHead=pFakeHead->next;
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+  		if (m == n || !head) return head;
+
+  		ListNode dummy{0};
+  		ListNode* pFakeHead = &dummy;
+  		pFakeHead->next = head;
+  		for (int i = 1; i < m; i++) {
+  			pFakeHead = pFakeHead->next;
   		}
-  		ListNode *prev=pFakeHead->next;
-  		ListNode *curr=pFakeHead->next->next;
+
+  		ListNode* prev = pFakeHead->next;
+  		ListNode* curr = pFakeHead->next->next;
   		
-  		for (int i=m; i<n; i++) {
-  			ListNode *tmp=curr->next;
-  			curr->next=prev;
-  			prev=curr;
-  			curr=tmp;
+  		for (int i = m; i < n; i++) {
+  			ListNode* tmp = curr->next;
+  			curr->next = prev;
+  			prev = curr;
+  			curr = tmp;
   		}
   		swap(pFakeHead->next, prev);
-  		prev->next=curr;
-  		return fakeHead.next;
+  		prev->next = curr;
+  		return dummy.next;
     }
 };

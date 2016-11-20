@@ -2,23 +2,6 @@
 The houses form a binary tree. If the root is robbed, its left and right can not be robbed.
 */
 
-/*time limit*/
-class Solution{
-private:
-	int rob(TreeNode *root, bool canRobNode) {
-		if (root == nullptr) return 0;
-		if (canRobNode) 
-			return max (root->val + rob(root->left, false) + rob(root->right, false), rob(root->left, true) + rob(root->right, true));
-		else 
-			return rob(root->left, true) + rob(root->right, true)
-	}
-public:
- 	int rob(TreeNode *root) {
-
- 		return max(rob(root, true), rob(root, false));
- 	}
-};
-
 /* OK */
 class Solution{
 private:
@@ -41,3 +24,22 @@ public:
  	}
 };
 
+
+// dp solution
+class Solution {
+private:
+	unordered_map<TreeNode*, pair<int, int>> hashmap;
+public:
+	int rob(TreeNode* root) {
+		return rob(root, true);
+	}	
+	int rob(TreeNode* root, bool canRob){
+		if (!root) return 0;
+		if (!hashmap.count(root))
+			hashmap.insert({root, {rob(root->left, true) + rob(root->right, true), root->val + rob(root->left, false) + rob(root->right, false)}});
+		int skipThis = hashmap[root].first;
+		int robThis = hashmap[root].second;
+		if (canRob) return max(skipThis, robThis);
+		else return skipThis;
+	}
+};

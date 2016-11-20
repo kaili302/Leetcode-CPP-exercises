@@ -1,6 +1,4 @@
 /*
-Twitter Codility Problem – Max Binary Gap
- 
 Problem: Get maximum binary Gap.
 
 For example, 9's binary form is 1001, the gap is 2.
@@ -10,22 +8,19 @@ For example, 9's binary form is 1001, the gap is 2.
 class Solution{
 public:
     int getGap(int N){
-        // left logic shift 
-        int mask = 1 << (sizeof(int) * 8 - 1);
-        int curr = sizeof(int) * 8 - 1;
-        int prev = -1;
+        int bits = sizeof(int) * 8;
+        int mask = 1 << (bits - 1);
         int maxGap = 0;
-        while (N != 0){
+        int prev = -1;
+        for (int i = 0; i < bits; i++){
             if (mask & N){
-                if (prev == -1) prev = curr;
-                else {
-                    maxGap = max(maxGap, prev - curr - 1);
-                    prev = curr;
-                }
+                if (prev != -1) maxGap = max(maxGap, i - prev - 1);
+                prev = i;
             }
             N <<= 1;
-            curr--;
         }
         return maxGap;
     }
 };
+
+

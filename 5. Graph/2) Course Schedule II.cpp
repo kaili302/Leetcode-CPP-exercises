@@ -16,40 +16,33 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 return one valid solution
 */
 
-class Solution {
+class Solution{
 public:
-    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
-      vector<int> result;
-
-  		// finish prerequisit.second to finish prerequisit.first
-  		vector<int> inbounds(numCourses, 0);
-  		for (auto& prerequisit : prerequisites){
-  			// build inbounds map
-  			inbounds[prerequisit.first]++;
-  		}
-  		queue<int> zeroInboundsQ;
-  		for (int i = 0; i < numCourses; i++){
-  			if (!inbounds[i]) 
-  				zeroInboundsQ.push(i);
-  		}
-
-  		while (zeroInboundsQ.size()){
-  			int zeroInboundsNode = zeroInboundsQ.front();
-  			zeroInboundsQ.pop();
-        result.push_back(zeroInboundsNode);
-  			for (auto& prerequisit : prerequisites){
-  				if (prerequisit.second == zeroInboundsNode){
-  					if(--inbounds[prerequisit.first] == 0){
-  						zeroInboundsQ.push(prerequisit.first);
-  					}
-				  }
-  			}
-   		}
-
-		for (int i = 0; i < numCourses; i++){
-  			if (inbounds[i]) 
-  				return {};
-  		}
-  		return result;
+  vector<int> findOrder(int n, vector<pair<int, int>>& prerequisites) {
+    vector<int> result;
+    vector<int> inbounds(n, 0);
+    vector<vector<int>> outbounds(n, vector<int>{});
+    for (auto& prerequisit : prerequisites){
+      inbounds[prerequisit.first]++;
+      outbounds[prerequisit.second].push_back(prerequisit.first);
     }
+    queue<int> zeroInbounds;
+    for (int i = 0; i < n; i++){
+      if (!inbounds[i])
+        zeroInbounds.push(i);
+    }
+    while(zeroInbounds.size()){
+      int course = zeroInbounds.front();
+      zeroInbounds.pop();
+      result.push_back(course);
+      for (int next : outbounds[course]){
+        if (!(--inbounds[next]))
+          zeroInbounds.push(next);
+      }
+    }
+    for (auto& inbound : inbounds){
+      if (inbound) return {};
+    }
+    return result;
+  }
 };

@@ -37,3 +37,9 @@ public:
     return true;
   }
 };
+
+
+int main(){
+  vector<pair<int, int>> edges{{0, 1}, {1, 2}, {1, 3}, {1, 4}, {3, 5}, {3, 6}, {5, 6}};
+  cout << validTree(7, edges) << endl;
+}

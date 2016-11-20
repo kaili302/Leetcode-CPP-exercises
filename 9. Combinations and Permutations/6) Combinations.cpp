@@ -13,25 +13,24 @@ If n = 4 and k = 2, a solution is:
 ]
 */
 
-
-class Solution {
+class Solution{
 private:
-	void combine(int n, int start, int k, vector<int> &comb,vector<vector<int>> &combinations) {
-		if (k == 0){
-			combinations.push_back(comb);
-			return;
-		}
-		for (int num = start; num <= n - k + 1; num++){
-			comb.push_back(num);
-			combine(n, start + 1, k - 1, comb, combinations);
-			comb.pop_back();
-		}
-	}
+  void combine(int num, int N, int k, vector<int>& v, vector<vector<int>>& result){
+    if (k == 0){
+      result.push_back(v);
+      return;
+    }
+    for (int i = num; i <= N + 1 - k; i++){
+      v.push_back(i);
+      combine(i + 1, N, k - 1, v, result);
+      v.pop_back();
+    }
+  }
 public:
     vector<vector<int>> combine(int n, int k) {
-       	vector<vector<int>> combinations;
-       	vector<int> comb;
-       	combine(n, 0, k, comb, combinations);
-       	return combinations;
-    }
+      vector<vector<int>> result;
+      vector<int> v;
+      combine(1, n, k, v, result);
+      return result;
+    }  
 };

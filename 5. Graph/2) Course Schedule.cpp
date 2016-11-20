@@ -14,37 +14,31 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
 */
 
-class Solution {
+class Solution{
 public:
-    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
-  		// finish prerequisit.second to finish prerequisit.first
-  		vector<int> inbounds(numCourses, 0);
-  		for (auto& prerequisit : prerequisites){
-  			// build inbounds map
-  			inbounds[prerequisit.first]++;
-  		}
-  		queue<int> zeroInboundsQ;
-  		for (int i = 0; i < numCourses; i++){
-  			if (!inbounds[i]) 
-  				zeroInboundsQ.push(i);
-  		}
-
-  		while (zeroInboundsQ.size()){
-  			int zeroInboundsNode = zeroInboundsQ.front();
-  			zeroInboundsQ.pop();
-  			for (auto& prerequisit : prerequisites){
-  				if (prerequisit.second == zeroInboundsNode){
-  					if(--inbounds[prerequisit.first] == 0){
-  						zeroInboundsQ.push(prerequisit.first);
-  					}
-				}
-  			}
-   		}
-
-		for (int i = 0; i < numCourses; i++){
-  			if (inbounds[i]) 
-  				return false;
-  		}
-  		return true;
+  bool canFinish(int n, vector<pair<int, int>>& prerequisites) {
+    vector<int> inbounds(n, 0);
+    vector<vector<int>> outbounds(n, vector<int>{});
+    for (auto& prerequisit : prerequisites){
+      inbounds[prerequisit.first]++;
+      outbounds[prerequisit.second].push_back(prerequisit.first);
     }
+    queue<int> zeroInbounds;
+    for (int i = 0; i < n; i++){
+      if (!inbounds[i])
+        zeroInbounds.push(i);
+    }
+    while(zeroInbounds.size()){
+      int course = zeroInbounds.front();
+      zeroInbounds.pop();
+      for (int next : outbounds[course]){
+        if (!(--inbounds[next]))
+          zeroInbounds.push(next);
+      }
+    }
+    for (auto& inbound : inbounds){
+      if (inbound) return false;
+    }
+    return true;
+  }
 };

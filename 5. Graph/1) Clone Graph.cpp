@@ -22,57 +22,35 @@ struct UndirectedGraphNode{
 	UndirectedGraphNode(int x) : label{x} {};
 };
 
-// overload hash and equal function to use graph hashmap
-/*
-template<>
-struct hash<UndirectedGraphNode*>{
-	// use memory address as hash value
-	size_t operator()(const UndirectedGraphNode*& pNode) const{
-		return reinterpret_cast<size_t>(pNode);
-	}
-};
-*/
-
-// one pass and bug free ;) bfs solution
 
 class Solution {
-private:
-  vector<UndirectedGraphNode*> toDelete;
-
   UndirectedGraphNode* cloneNode(UndirectedGraphNode* pNode){
-    toDelete.push_back(new UndirectedGraphNode(pNode->label));
-    toDelete.back()->neighbors = pNode->neighbors;
-    return toDelete.back();
-  }
+    auto pNewNode = new UndirectedGraphNode(pNode->label);
+    pNewNode->neighbors = pNode->neighbors;
+    return pNewNode;
+  };
 public:
-  ~Solution(){
-    for (auto &pNode : toDelete) 
-      delete pNode;
-  }
-  
-    UndirectedGraphNode* cloneGraph(UndirectedGraphNode* node) {
-      if (!node) 
-      	return nullptr;
-      
-      unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> hashMap;
-      queue<UndirectedGraphNode*> q;
+  UndirectedGraphNode* cloneGraph(UndirectedGraphNode* pRoot) {
+    if (!pRoot)
+        return pRoot;
+    unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> hashmap;
+    queue<UndirectedGraphNode*> bfsQ;
+    auto pClone = cloneNode(pRoot);
+    hashmap.insert({pRoot, pClone});
+    bfsQ.push(pClone);
 
-      UndirectedGraphNode* clonedRoot = cloneNode(node);
-      q.push(clonedRoot);
-      hashMap.insert({node, clonedRoot});
-
-      while (q.size()){
-        UndirectedGraphNode* pClonedNode = q.front();
-        q.pop();
-        for (int i = 0; i < pClonedNode->neighbors.size(); i++){
-        if (!hashMap.count(pClonedNode->neighbors[i])){
-            UndirectedGraphNode* clonedNeighbor = cloneNode(pClonedNode->neighbors[i]);
-            q.push(clonedNeighbor);
-            hashMap.insert({pClonedNode->neighbors[i], clonedNeighbor});
-          }
-          pClonedNode->neighbors[i] = hashMap[pClonedNode->neighbors[i]];
+    while(bfsQ.size()){
+      pClone = bfsQ.front();
+      bfsQ.pop();
+      for (auto& neighbor : pClone->neighbors){
+        if (!hashmap.count(neighbor)){
+          hashmap.insert({neighbor, cloneNode(neighbor)});
+          bfsQ.push(hashmap[neighbor]);
         }
-      }    
-      return hashMap[node];
+        neighbor = hashmap[neighbor];
+      }
     }
+    return hashmap[pRoot];
+  }
 };
+

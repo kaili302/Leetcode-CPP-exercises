@@ -2,7 +2,7 @@
 
 class MyQueue {
 private:
-    int *m_array;
+    int* m_array;
     int m_size;
     int m_head;
     int m_tail;
@@ -18,7 +18,7 @@ public:
 
     bool push (int item) {
         if (isFull()) return false;
-        m_tail = (m_tail-1+m_capacity)%m_capacity;
+        m_tail = (m_tail - 1 + m_capacity) % m_capacity;
         m_array[m_tail] = item;
         m_size++;
         return true;
@@ -26,7 +26,7 @@ public:
 
     bool pop () {
         if (isEmpty()) return false;
-        m_head=(m_head-1+m_capacity)%m_capacity;
+        m_head=(m_head - 1 + m_capacity) % m_capacity;
         m_size--;
         return true;
     }

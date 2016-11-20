@@ -7,36 +7,39 @@ Note:
 You may assume that n is always positive.
 Factors should be greater than 1 and less than n.
 */
+
 class Solution{
 private:
-    vector<int> getFactorsHelper(int n){
-        vector<int> factors;
+    void getFactors(int n, vector<int>& factors){
         for (int i = 2; i < n; i++){
-            if (n % i == 0) factors.push_back(i);
+            if (n % i == 0){
+              factors.push_back(i);
+            }
         }
-        return factors;
     }
-    void getFactors(vector<int> &factors, int idx, int n, vector<int> &combination, vector<vector<int>> &result) {
-        if (n == 0) return;
-        if (n == 1) {
-            result.push_back(combination);
+
+    void getFactors(vector<int>& factors, int idx, int n, vector<int>& v, vector<vector<int>>& result){
+        if (n == 1){
+            result.push_back(v);
             return;
         }
-        for (int i = idx; i < factors.size() && n >= factors[i]; i++){
-            if (n % factors[i] != 0) continue;
-            combination.push_back(factors[i]);
-            getFactors(factors, i, n/factors[i], combination, result);
-            combination.pop_back();
+        for (int i = idx; i < factors.size() && factors[i] <= n; i++){
+            if (!(n%factors[i])){
+                v.push_back(factors[i]);
+                getFactors(factors, i, n/factors[i], v, result);
+                v.pop_back();
+            }
         }
     }
 
 public:
     vector<vector<int>> getFactors(int n) {
-        if (n <= 3) return {{n}};
+        if (n <= 3) return {{}};
+        vector<int> factors;
+        getFactors(n, factors);
         vector<vector<int>> result;
-        vector<int> factors = getFactorsHelper(n);
-        vector<int> combination;
-        getFactors(factors, 0, n, combination, result);
+        vector<int> v;
+        getFactors(factors, 0, n, v, result);
         return result;
     }
 };

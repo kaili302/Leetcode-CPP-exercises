@@ -11,32 +11,25 @@ Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
 Return:
 ["AAAAACCCCC", "CCCCCAAAAA"].
 */
-
 class Solution {
 public:
     vector<string> findRepeatedDnaSequences(string s) {
-      // use two bits to present a DNA nucleotide
-      // 10-letter-long sequences use 20 bits
-      unordered_map<char, uint32_t> dict;
-      dict.emplace('A', 0); dict.emplace('C', 1);
-      dict.emplace('G', 2); dict.emplace('T', 3);
-      
-      unordered_set<uint32_t> sequences;
+      unordered_map<char, uint32_t> DNAMap{{'A', 0}, {'C', 1}, {'G', 2}, {'T', 3}};
+      unordered_map<int, string> hashmap;
       unordered_set<string> result;
-      uint32_t sequence  = 0;
-      uint32_t mask = 0x000FFFFF;
 
-      for (int i = 0; i < s.length(); i++){
-        sequence |= dict[s[i]];
+      int sequence = 0;
+      int mask = ~((~0) << 20);
+      for (int i = 0; i < s.size(); i++){
+        sequence = (sequence << 2) + DNAMap[s[i]];
         if (i >= 9){
-          if (sequences.count(sequence)){
-            result.insert(s.substr(i - 9, 10));
+          sequence = mask & sequence;
+          if (hashmap.count(sequence)){
+            result.insert(hashmap[sequence]);
+          }else{
+            hashmap.insert({sequence, s.substr(i - 9, 10)});
           }
-          sequences.insert(sequence);
         }
-        sequence <<= 2;
-        sequence &= mask;
-
       }
       return {result.begin(), result.end()};
     }

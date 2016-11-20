@@ -16,28 +16,31 @@ Return ["JFK","ATL","JFK","SFO","ATL","SFO"].
 Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it is larger in lexical order.
 */
 
-typedef priority_queue<string, deque<string>, greater<string>> MinHeap_t;
-class Solution {
-public:
-  vector<string> findItinerary(vector<pair<string, string>> tickets) {
-    unordered_map<string, MinHeap_t> graph;
-    for (auto& ticket : tickets){
+typedef unordered_map<string, priority_queue<string, vector<string>, greater<string>>> Graph;
+class Solution{
+  void buildGraph(vector<pair<string, string>>& tickets, Graph& graph){
+        for (auto& ticket : tickets){
       if (!graph.count(ticket.first)) 
-        graph.emplace(ticket.first, MinHeap_t{});
+        graph.insert({ticket.first, priority_queue<string, vector<string>, greater<string>>{}});
       graph[ticket.first].push(ticket.second);
     }
-    deque<string> result;
-    dfs("JFK", result, graph);
-    return {result.begin(), result.end()};
   }
 
-  void dfs(string dep, deque<string>& result, unordered_map<string, MinHeap_t>& graph){
-    MinHeap_t& destinations = graph[dep];
-    while(destinations.size()){
-      string destination = destinations.top();
-      destinations.pop();
-      dfs(destination, result, graph);
-    }
-    result.push_front(dep);
+  void dfs(string dep, Graph& graph, vector<string>& res){
+      while (graph[dep].size()){
+        string des = graph[dep].top();
+        graph[dep].pop();
+        dfs(des, graph, res);
+      }
+      res.push_back(dep);
+  }
+public:
+  vector<string> findItinerary(vector<pair<string, string>>& tickets) {
+      Graph graph;
+      buildGraph(tickets, graph);
+      vector<string> res;
+      dfs("JFK", graph, res);
+      reverse(res.begin(), res.end());
+      return res;
   }
 };

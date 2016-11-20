@@ -19,24 +19,24 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 
 class Solution {
 public:
-    ListNode* getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
    		if (!headA || !headB) return nullptr;   
    		int lengthA=0;
    		int lengthB=0;
-   		ListNode *tmpA=headA;
-   		ListNode *tmpB=headB;
+   		ListNode* tmpA=headA;
+   		ListNode* tmpB=headB;
    		while (tmpA || tmpB) {
    			if (tmpA) {lengthA++; tmpA=tmpA->next;}
    			if (tmpB) {lengthB++; tmpB=tmpB->next;}
    		}
-   		while (lengthA-->lengthB) headA=headA->next;
+   		while (lengthA-- > lengthB) headA=headA->next;
    		lengthA++;
-   		while (lengthB-->lengthA) headB=headB->next;
-		while (headA) {
-			if (headA->val == headB->val) return headA;
-			headA=headA->next;
-			headB=headB->next;
-		}
-		return nullptr;
+   		while (lengthB-- > lengthA) headB=headB->next;
+  		while (headA) {
+  			if (headA->val == headB->val) return headA;
+  			headA=headA->next;
+  			headB=headB->next;
+  		}
+  		return nullptr;
     }
 };

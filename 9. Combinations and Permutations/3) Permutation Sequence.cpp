@@ -16,39 +16,29 @@ Note: Given n will be between 1 and 9 inclusive.
 
 class Solution {
 public:
-    string getPermutation(int n, int k) {
-        string result;
-        if (k <= 0 || n <= 0) return result;
-        vector<int> factorial(n + 1);
-        list<int> mem;
+    string getPermutation(int n, int k){
+        if (n <= 1) return to_string(n);
+        vector<long> permutations(n, 1);
+        for (int i = 2; i < n; i++){
+            permutations[i] = permutations[i-1] * i;
+        }
+        if (k > permutations[n-1] * n) return "";
+    
+        set<int, less<int>> nums;
         for (int i = 1; i <= n; i++){
-            if (i == 1) factorial[i] = 1;
-            else factorial[i] = i * factorial[i-1];
-            mem.push_back(i);
+            nums.insert(i);
         }
-
+    
+        string res;
         for (int i = n; i >= 1; i--){
-            if (mem.size() == 1){
-                result.push_back(mem.front() + '0');
-                break;
-            }
-
-            int digit = k / factorial[i-1];
-            k %= factorial[i-1];
-            list<int>::iterator it = mem.begin();
-            if (k == 0) advance(it, digit - 1);    
-            else advance(it, digit);
-            result.push_back(*it + '0');
-            mem.erase(it);
-
-            if (k == 0){
-                while (mem.size()){
-                    result.push_back(mem.back() + '0');
-                    mem.pop_back();
-                }
-                break;
-            }
+            int order = (k - 1) / permutations[i-1];
+            auto it = nums.begin();
+            advance(it, order);
+            res.push_back((*it) + '0');
+            nums.erase(it);
+            k = k - permutations[i-1] * order;
         }
-        return result;
+        return res;
     }
+
 };

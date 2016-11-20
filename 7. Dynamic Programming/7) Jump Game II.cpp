@@ -1,72 +1,26 @@
 /*
-A message containing letters from A-Z is being encoded to numbers using the following mapping:
-'A' -> 1
-'B' -> 2
-...
-'Z' -> 26
-Given an encoded message containing digits, determine the total number of ways to decode it.
-
-For example,
-Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
-
-The number of ways decoding "12" is 2.
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+Each element in the array represents your maximum jump length at that position.
+Your goal is to reach the last index in the minimum number of jumps.
+For example:
+Given array A = [2,3,1,1,4]
+The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 */
 
-class Solution{
-private:
-    bool isLetter(string s){
-        return s[0]!= '0' && stoi(s) <= 26;
-    }
+class Solution {
 public:
-    int numDecodings(string s) {
-        if (s.empty()) return 0;
-
-        vector<int> dp(s.size() + 1, 0);
-        dp[0] = 1;
-        for (int i = 1; i <= s.size(); i++){
-            if (s[i-1] == '0'){
-                if (i <= 1 || !isLetter(s.substr(i - 2, 2))) return 0;
-                dp[i] = dp[i-2];
-            }else
-                dp[i] = dp[i-1] + (i >= 2 && isLetter(s.substr(i-2, 2))? dp[i-2] : 0);
+    int jump(vector<int>& nums) {
+        int beforePrevMax = 0;
+        int prevMax = 0;
+        int currMax = 0;
+        int count = 0;
+        while (currMax < nums.size() - 1){
+            for (int i = beforePrevMax; i <= prevMax; i++ )
+                currMax = max(currMax, i + nums[i]);
+            count++;
+            beforePrevMax = prevMax;
+            prevMax = currMax;
         }
-        return dp[s.size()];
+        return count;
     }
 };
-
-
-
-class Solution{
-private:
-    bool isLetter(int start, string &s){
-        return start >= 0 && s[start] != '0' && stoi(s.substr(start, 2)) <= 26;
-    }
-
-public:
-    int numDecodings(string s) {
-        if (s.empty()) return 0;
-
-        int currCount = 0;
-        int prevCount = 1;
-        int beforePrevCount = 1;
-
-        for (int i = 0; i < s.size(); i++){
-            if (s[i] == '0') {
-                if (!isLetter(i-1, s)) return 0;
-                currCount = beforePrevCount;
-            }else{
-                currCount = prevCount + (isLetter(i-1, s) ? beforePrevCount : 0);
-            }
-            beforePrevCount = prevCount;
-            prevCount = currCount;
-        }
-        return currCount;
-    }
-};
-
-
-
-
-
-
-

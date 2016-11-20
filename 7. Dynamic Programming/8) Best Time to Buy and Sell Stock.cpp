@@ -19,16 +19,16 @@ In this case, no transaction is done, i.e. max profit = 0.
 /* only one transaction */ 
 class Solution {
 public:
-    int maxProfit(vector<int> &prices) {
-       	if (prices.size() <= 1)
-       		return 0;
-       	
-    	int prevMin = prices[0];
-    	int maxProfit = 0;
-		for (int i = 1; i < prices.size(); i++){
-			if(prices[i] < prevMin) prevMin = prices[i];
-			else if (prices[i] > prevMin) maxProfit = max(maxProfit, prices[i] - prevMin);
-		}
-		return maxProfit;
+  // only one txn
+  int maxProfit(vector<int>& prices) {  
+    if (prices.size() <= 1) return 0;
+    int min = prices[0];
+    int profit = 0;
+    for (auto& price : prices){
+      if (price < min) min = price;
+      else profit = max(profit, price - min);
     }
+    return profit;
+  }
 };
+

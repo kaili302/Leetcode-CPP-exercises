@@ -1,34 +1,27 @@
-
-class Solution {
+// Given a digit string, return all possible letter combinations that the number could represent. 
+// Input:Digit string "23", Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+class Solution{
 private:
-	void initKeyMap(array<string, 10> &keymap){
-    	keymap[2] = "abc"; keymap[3] = "def";
-    	keymap[4] = "ghi"; keymap[5] = "jkl";
-    	keymap[6] = "mno"; keymap[7] = "pqrs";
-    	keymap[8] = "tuv"; keymap[9] = "wxyz";
-	}
-    void letterCombinations(string &digits, int idx, string &letter, vector<string> &combinations, array<string, 10> &keymap) {
-    	if (idx == digits.length()){
-    		combinations.push_front(letter);
-    		return;
-    	}
-    	string const &alphabets = keymap[digits[idx] - '0'];
-    	for (int i = 0; i < alphabets.length(); i++){
-    		letter.push_back(alphabets[i]);
-    		letterCombinations(digits, idx + 1, letter, combinations, keymap);
-    		letter.pop_back();
-    	}
+    const vector<string> keymap{"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    void letterCombinations(string& digits, int idx, string& letter, vector<string>& combinations){
+        if (idx == digits.size()){
+            combinations.push_back(letter);
+            return;
+        }
+        for (int i = 0; i < keymap[digits[idx] - '0'].size(); i++){
+            letter.push_back(keymap[digits[idx] - '0'][i]);
+            letterCombinations(digits, idx + 1, letter, combinations);
+            letter.pop_back();
+        }
     }
+    
 public:
     vector<string> letterCombinations(string digits) {
-    	if (digits.empty()) return {};
-    	vector<string> combinations;
-    	array<string, 10> keymap;
-    	initKeyMap(keymap);
-
-    	string letter{""};
-    	letter.reserve(digits.length());
-    	letterCombinations(digits, 0, letter, combinations, keymap);
-    	return combinations;
+        if (digits.empty()) return {};
+        vector<string> combinations;
+        string letter;
+        letterCombinations(digits, 0, letter, combinations);
+        return combinations;
     }
 };

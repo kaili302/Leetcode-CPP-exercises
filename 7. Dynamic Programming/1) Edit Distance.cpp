@@ -7,28 +7,39 @@ b) Delete a character
 c) Replace a character
 */
 
-
 class Solution {
 public:
     int minDistance(string word1, string word2) {
-        int size1 = word1.length();
-        int size2 = word2.length();
-        if (!size1 || !size2) return abs(size1 - size2);
-
-        // dp[i][j] stands for the edit distance between word1.substr(0, i) and word2.substr(0, j)
-        vector<vector<int>> dp(size1+1, vector<int>(size2+1, 0));
-        for (int i = 0; i <= size1; i++) dp[i][0] = i;
-        for (int j = 0; j <= size2; j++) dp[0][j] = j;
-        
-        for (int j = 1; j <= size2; j++){
-            for (int i = 1; i <= size1; i++){
-                if (word1[i-1] == word2[j-1]){
-                    dp[i][j] = dp[i-1][j-1];
-                }else{
-                    dp[i][j] = min(min(dp[i-1][j], dp[i-1][j-1]), dp[i][j-1]) + 1;
-                }                   
+        vector<vector<int>> dp(word1.size() + 1, vector<int>(word2.size() + 1, 0));
+        for (int i = 0; i <= word1.size(); i++){
+            for (int j = 0; j <= word2.size(); j++){
+                if (!i) dp[i][j] = j;
+                else if (!j) dp[i][j] = i;
+                else if (word1[i-1] == word2[j-1]) dp[i][j] = dp[i-1][j-1];
+                else dp[i][j] = min(min(dp[i][j-1], dp[i-1][j-1]), dp[i-1][j]) + 1;
             }
         }
-        return dp[size1][size2];
+        return dp.back().back();
+    }
+};
+
+
+//o(n) space
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        vector<int> dp(word1.size() + 1, 0);
+        for (int j = 0; j <= word2.size(); j++){
+            int prev = dp[0];
+            for (int i = 0; i <= word1.size(); i++){
+                int tmp = dp[i];
+                if (!j) dp[i] = i;
+                else if (!i) dp[i] = j;
+                else if (word1[i-1] == word2[j-1]) dp[i] = prev;
+                else dp[i] = min(prev, min(dp[i-1], dp[i])) + 1;
+                prev = tmp;
+            }
+        }
+        return dp.back();
     }
 };

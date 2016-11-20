@@ -14,7 +14,7 @@ private:
 			if (k != i && nums[k] == nums[i]) continue;
 			swap(nums[i], nums[k]);
 			permuteUnique(nums, i + 1, result);
-		}  		
+		}
     }
 public:
     vector<vector<int>> permuteUnique(vector<int>& nums) {

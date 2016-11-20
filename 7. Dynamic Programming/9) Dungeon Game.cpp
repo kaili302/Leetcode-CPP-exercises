@@ -25,30 +25,24 @@ The knight's health has no upper bound.
 Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.
 */
 
+
 class Solution {
 public:
-    int calculateMinimumHP(vector<vector<int>> &dungeon) {
-    	int HE = dungeon.size();
-    	if (!HE) return 1;
-    	int WI = dungeon[0].size();
-    	vector<vector<int>> health(HE, vector<int>(WI, 0));
-
-    	for (int r = HE - 1; r >=0; r--){
-    		for (int c = WI - 1; c >=0; c--){
-    			if (r < HE - 1 && c < WI - 1)
-	    			health[r][c] = min(health[r][c+1], health[r+1][c]);
-	    		else if (r == HE - 1 && c == WI - 1)
-	    			health[r][c] = 0;
-	    		else if (r == HE - 1)
-	    			health[r][c] = health[r][c+1];
-	    		else 
-	    			health[r][c] = health[r+1][c];
-
-	    		health[r][c] = dungeon[r][c] > health[r][c] ? 0 : health[r][c] - dungeon[r][c];
-    		}
-    	}
-    	return health[0][0] + 1;
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        int HE = dungeon.size();
+        if (!HE) return 1;
+        int WI = dungeon[0].size();
+    
+        vector<vector<int>> dp(HE, vector<int>(WI, 0));
+        for (int r = HE - 1; r >= 0; r--){
+            for (int c = WI - 1; c >= 0; c--){
+                if (r != HE - 1 || c != WI - 1)
+                    dp[r][c] = min((r == HE - 1? INT_MAX: dp[r+1][c]), (c == WI - 1? INT_MAX: dp[r][c+1]));
+                dp[r][c] = dungeon[r][c] - dp[r][c];
+                if (dp[r][c] > 0) dp[r][c] = 0;
+                else dp[r][c] = -dp[r][c];
+            }
+        }
+        return dp[0][0] + 1;
     }
 };
-
-

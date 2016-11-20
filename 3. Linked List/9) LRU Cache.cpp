@@ -6,73 +6,72 @@ When the cache reached its capacity, it should invalidate the least recently use
 Subscribe to see which companies asked this question
 */
 
-
-struct LRUNode {
-	LRUNode *next;
-	LRUNode *prev;
-	int key;
-	int val;
-	LRUNode():key{0}, val{0}, next{nullptr}, prev {nullptr}{} 
-	LRUNode(int ikey, int ival):key{ikey}, val{ival}, next{nullptr}, prev {nullptr}{}
+struct LRUNode{
+    int key;
+    int val;
+    LRUNode* pPrev = nullptr;
+    LRUNode* pNext = nullptr;
+    LRUNode(int ikey, int ival) : key {ikey}, val{ival}{}
 };
 
 class LRUCache{
-private:
-	std::unordered_map<int, LRUNode> m_map;
-	LRUNode m_head;
-	LRUNode m_tail;
-	int m_capacity;
+    unordered_map<int, LRUNode*> hashmap;
+    LRUNode* pHead;
+    LRUNode* pEnd;
+    int capacity;
 
-	bool full() {
-		return m_capacity == m_map.size();
-	}
+    void promot(LRUNode* pNode){
+        if (pNode->pNext && pNode->pPrev){
+            pNode->pPrev->pNext = pNode->pNext;
+            pNode->pNext->pPrev = pNode->pPrev;
+        }
+        pNode->pNext = pHead->pNext;
+        pHead->pNext->pPrev = pNode;
+        pHead->pNext = pNode;
+        pNode->pPrev = pHead;
+    }
 
-	void removeLast() {
-		LRUNode *pNode=m_tail.prev;
-		pNode->next->prev=pNode->prev;
-		pNode->prev->next=pNode->next;
-		m_map.erase(pNode->key);
-	}
+    void freeNode(LRUNode* pNode){
+        delete pNode;
+        pNode = nullptr;
+    }
 
-	void rise(int key) {
-		if (!m_map.count(key)) return;
-		LRUNode *pNode=&m_map[key];
-		if (pNode->next !=nullptr){
-			// remove from original position
-			pNode->next->prev=pNode->prev;
-			pNode->prev->next=pNode->next;
-		}
-		// insert at head position
-		m_head.next->prev=pNode;
-		pNode->next=m_head.next;
-		pNode->prev=&m_head;
-		m_head.next=pNode;
-	}
-
+    void remove(LRUNode* pNode){
+        if (!pNode || pNode == pHead || pNode == pEnd)
+            return;
+        hashmap.erase(pNode->key);
+        pNode->pPrev->pNext = pNode->pNext;
+        pNode->pNext->pPrev = pNode->pPrev;
+        freeNode(pNode);
+    }
+    
+    bool isFull(){
+        return capacity == hashmap.size();
+    }
 
 public:
-    LRUCache(int capacity): m_capacity{capacity}, m_tail{}, m_head{}, m_map{}{
-    	m_head.next=&m_tail;
-    	m_tail.prev=&m_head;
+    LRUCache(int icapacity) : capacity{icapacity}{
+        pHead = new LRUNode{0, 0};
+        pEnd = new LRUNode{0, 0};
+        pEnd->pPrev = pHead;
+        pHead->pNext = pEnd;
     }
-    
-    int get(int key) {
-    	int val=-1;
-    	if (m_map.count(key)) {
-    		val=m_map[key].val;
-    		rise(key);
-    	}
-    	return val;
+
+    void set(int key, int val){
+        if (hashmap.count(key)){
+            hashmap[key]->val = val;
+        }else{
+            if (isFull())
+                remove(pEnd->pPrev);
+            hashmap.insert({key, new LRUNode{key, val}});
+        }
+        promot(hashmap[key]);
     }
-    
-    void set(int key, int value) {
-    	if (m_map.count(key)==0) {
-    		if (full()) removeLast();
-    		m_map.insert(std::make_pair(key, LRUNode{key, value}));
-    	}else m_map[key].val=value;
-    	rise(key);
+
+    int get(int key){
+        if (!hashmap.count(key))
+            return -1;
+        promot(hashmap[key]);
+        return hashmap[key]->val;
     }
 };
-
-
-

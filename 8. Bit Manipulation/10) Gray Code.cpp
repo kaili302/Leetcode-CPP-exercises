@@ -14,20 +14,20 @@ For a given n, a gray code sequence is not uniquely defined.
 For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
 For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
 */
+
 class Solution {
 public:
     vector<int> grayCode(int n) {
-    	if (n <= 0) return {};
-    	vector<int> result;
-    	result.reserve(1<<n);
-    	result.push(0);
-
-    	for (int i = 0; i < n; i++){
-    		int size = result.size();
-    		for (int j = size - 1; j >=0; j--){
-    			result.push_back(result[j] | (1 << i));
-    		}
-    	}
-		return result; 	      
+        vector<int> result;
+        result.push_back(0);
+        int mask = 1;
+        for (int i = 1; i <= n; i++){
+            int size = result.size();
+            for (int i = size - 1; i >= 0; i--){
+                result.push_back(mask | result[i]);
+            }
+            mask <<= 1;
+        }
+        return result;
     }
 };

@@ -12,7 +12,7 @@ public:
 
     int numTrees(int n, std::vector<int>& numTrees) {
 		for (int i=0; i<n; i++) {
-			numTrees[n] += numTrees[n-1-i]*numTrees[i];	
+			numTrees[n] += numTrees[n-1-i]*numTrees[i];
 		}
     }
 };

@@ -13,7 +13,7 @@ public:
 		int maxSubSum = A[0];
 		int currSubSum = A[0];
 		for (int i = 1; i < A.length(); i++){
-			currSubSum = max(A[i], cuuSubSum + A[i]);
+			currSubSum = max(A[i], currSubSum + A[i]);
 			maxSubSum = max(maxSubSum, currSubSum);
 		}
 		return maxSubSum;

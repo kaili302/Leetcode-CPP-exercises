@@ -10,20 +10,19 @@ private:
 		return toDelete.back();
 	}
 	
-	TreeNode* generateBST(vector<int> &nums, int lo, int hi){
+	TreeNode* generateBST(vector<int>& nums, int lo, int hi){
 		if (lo > hi) return nullptr;
 		int mid = (lo + hi) / 2;
-		TreeNode *pNode = newNode(nums[mid]);
+		TreeNode* pNode = newNode(nums[mid]);
 		pNode->left = generateBST(nums, lo, mid - 1);
 		pNode->right = generateBST(nums, mid + 1, hi);
 		return pNode;
 	}
 
 public:
-    ~Solution(){ for (auto &pNode : toDelete) delete pNode; }
+    ~Solution(){ for (auto& pNode : toDelete) delete pNode; }
 	
-	TreeNode* sortedArrayToBST(vector<int> &nums){
+	TreeNode* sortedArrayToBST(vector<int>& nums){
 		return generateBST(nums, 0, nums.size() - 1);
 	}
 };
-

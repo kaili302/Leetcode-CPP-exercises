@@ -138,8 +138,8 @@ public:
 };
 
 //Vertical Order
-/*Given a binary tree, return the vertical order traversal of its nodes' values. 
-(ie, from top to bottom, column by column).*/
+/* Given a binary tree, return the vertical order traversal of its nodes' values. 
+(ie, from top to bottom, column by column). */
 class Solution {
 private:
     std::unordered_map<int, std::vector<int>> hashmap;
@@ -160,5 +160,6 @@ public:
         verticalOrder(root->right, weight+1);
     }
 };
+
 
 

@@ -11,50 +11,24 @@ For example,
   [3,2,1]
 ]
 */
-
-class Solution {
-public:
-    vector<vector<int>> permute(vector<int>& nums) {
-    	if (nums.empty()) return {};
-		
-		queue<vector<int>> q;
-		q.push({});
-		for (auto& num : nums){
-			int size = q.size();
-			for (int i = 0; i < size; i++){
-				vector<int>& oldList = q.front();
-				for (int j = 0; j <= oldList.size(); i++){
-					vector<int> newList(oldList);
-					newList.insert(newList.begin() + j, num);
-					q.push(newList);
-				}
-				q.pop();
-			}
-		}
-		return {q.begin(), q.end()};
-    }
-};
-
-
 // recursion way. 
-class Solution {
+class Solution{
 private:
-	void permute(vector<int>& nums, int i, vector<vector<int>>& result){
-		if (i == nums.size() - 1){
+	void permute(int idx, vector<int>& nums, vector<vector<int>>& result){
+		if (idx == nums.size()){
 			result.push_back(nums);
 			return;
 		}
-		for (int k = i; k < nums.size(); k++){
-			swap(nums[i], nums[k]);
-			permute(nums, k + 1, result);
-			swap(nums[k], nums[i]);
+		for (int i = idx; i < nums.size(); i++){
+			swap(nums[i], nums[idx]);
+			permute(idx + 1, nums, result);
+			swap(nums[i], nums[idx]);
 		}
 	}
 public:
-    vector<vector<int>> permute(vector<int>& nums) {
-    	if (nums.empty()) return {};
+	vector<vector<int>> permute(vector<int>& nums) {
 		vector<vector<int>> result;
-		permute(nums, 0, result);
-    }
+		permute(0, nums, result);
+        return result;
+	}
 };
-

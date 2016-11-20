@@ -2,37 +2,36 @@
 For example: Given "25525511135",
 return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)*/
 
-
-class Solution {
+class Solution{
 private:
-	void initKeyMap(array<string, 10> &keymap){
-    	keymap[2] = "abc"; keymap[3] = "def";
-    	keymap[4] = "ghi"; keymap[5] = "jkl";
-    	keymap[6] = "mno"; keymap[7] = "pqrs";
-    	keymap[8] = "tuv"; keymap[9] = "wxyz";
-	}
-    void letterCombinations(string &digits, int idx, string &letter, vector<string> &combinations, array<string, 10> &keymap) {
-    	if (idx == digits.length()){
-    		combinations.push_front(letter);
-    		return;
-    	}
-    	string const &alphabets = keymap[digits[idx] - '0'];
-    	for (int i = 0; i < alphabets.length(); i++){
-    		letter.push_back(alphabets[i]);
-    		letterCombinations(digits, idx + 1, letter, combinations, keymap);
-    		letter.pop_back();
-    	}
+    void restoreIP(string& digits, int segment, int idx, string ip, vector<string>& result){
+        if (segment * 3 < digits.size() - idx) return;
+        if (!segment){
+            if (idx == digits.size()){
+                ip.pop_back();
+                result.push_back(ip);
+            }   
+            return;
+        }
+        
+        if (digits[idx] == '0'){
+            restoreIP(digits, segment - 1, idx + 1, ip + "0.", result);
+        }else{
+            for (int end = idx; end < digits.size() && end - idx + 1 <= 3; end++){
+                string num = digits.substr(idx, end - idx + 1);
+                if (stoi(num) <= 255){
+                    restoreIP(digits, segment - 1, end + 1, ip + num + ".", result);
+                }
+            }    
+        }        
     }
 public:
-    vector<string> letterCombinations(string digits) {
-    	if (digits.empty()) return {};
-    	vector<string> combinations;
-    	array<string, 10> keymap;
-    	initKeyMap(keymap);
-
-    	string letter{""};
-    	letter.reserve(digits.length());
-    	letterCombinations(digits, 0, letter, combinations, keymap);
-    	return combinations;
+    vector<string> restoreIpAddresses(string digits) {
+        if (digits.empty()) return {};
+        vector<string> result;
+        string ip;
+        restoreIP(digits, 4, 0, ip, result);
+        return result;
     }
 };
+

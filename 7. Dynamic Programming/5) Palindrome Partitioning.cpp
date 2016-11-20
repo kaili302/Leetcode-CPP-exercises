@@ -11,37 +11,32 @@ Return
     ["a","a","b"]
   ]
 */
-class Solution{
-private:
-	void partition(string &s, int start, vector<string> &tmpList, vector<vector<string>> &result, vector<vector<bool>> &isPalindrome) {
-		if (start == s.length()) {
-			result.push_back(tmpList);
-		}
-
-		for (int i = start; i < s.length(); i++){
-			if (isPalindrome[start][i]) {
-				tmpList.push_back(s.substr(start, i - start + 1));
-				partition(s, i + 1, tmpList, result, isPalindrome);
-				tmpList.pop_back();
-			}
+class Solution {
+public:
+void buildPalMap(vector<vector<bool>>& palMap, string s){
+	for (int i = s.size() - 1; i >= 0; i--){
+		for(int j = i; j < s.size(); j++){
+			palMap[i][j] = (s[i] == s[j] && (j - i <= 2 || palMap[i+1][j-1]));
 		}
 	}
-public:
- 	vector<vector<string>> partition(string s) {
- 		int sLen = s.length();
- 		vector<vector<bool>> isPalindrome(sLen, vector<bool>(sLen, false));
+}
 
- 		for (int i = sLen - 1; i >= 0; i--){
- 			for (int j = i; j < sLen; j++){
- 				if (s[i] == s[j] && (i + 1 >= j || isPalindrome[i+1][j-1]))
- 					isPalindrome[i][j] = true;
- 			}
- 		}
-
- 		vector<vector<string>> result;
-		vector<string> tmpList;
-		tmpList.reserve(s.length());
-		partition(s, 0, tmpList, result, isPalindrome);
-		return result;
- 	}
+void partition(vector<vector<bool>>& palMap, string& s, int idx, vector<string>& v, vector<vector<string>>& result){
+	if (idx == s.size()) result.push_back(v);
+	for (int len = 1; len <= s.size() - idx; len++){
+		if (palMap[idx][idx+len-1]) {
+			v.push_back(s.substr(idx, len));
+			partition(palMap, s, idx + len, v, result);
+			v.pop_back();
+		}
+	}
+}
+vector<vector<string>> partition(string s) {
+	vector<vector<bool>> palMap(s.size(), vector<bool>(s.size(), false));
+	buildPalMap(palMap, s);
+	vector<vector<string>> result;
+	vector<string> v;
+	partition(palMap, s, 0, v, result);
+	return result;
+}
 };
